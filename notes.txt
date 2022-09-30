@@ -1,0 +1,24 @@
+
+ALL DATA STRUCTURES:
+- only accept whole numbers (pos or neg), floor decimals
+- max value 999999999999999, min value -999999999999999 (+/- 15x9)
+	- alternatively, could just do up to 1000 or some arbitrary lower number
+- clean input, make sure parameter is an int only
+- don't allow NaN as number (why tf does js recognize this as a number)
+- don't allow null
+- weird quirk with -01234 = -669? if leading zeros on a number that isn't zero, skip them when adding (part of sanitizing input)
+
+
+BST and Heap:
+- insert duplicate either (1) does nothing, or (2) adds a (n + 1) after it
+	- ex: already have 10, insert(10) -> 10(2)
+	- would need to add a check for this in delete
+- insert empty adds to size, sanitize this
+
+___________________________________________
+
+rules for comments:
+- https://blog.codinghorror.com/coding-without-comments/
+- one before if, one at top of if (multiple ok if multiple steps)
+- one line per block of code (explaining what that one block does)
+- comment for mystery vars + shortened-name vars
