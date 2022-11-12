@@ -7,8 +7,74 @@
 		<link rel="stylesheet" href="style.css">
 	</head>
 	<body>
-		<canvas id="canvas" width="600" height="600"></canvas>
-		<button onClick = "update()">update</button>
+		<div class="header">
+			<h1>{wd}</h1>
+			<!-- https://icon-sets.iconify.design/codicon/home/
+				https://icon-sets.iconify.design/bx/home-alt-2/
+				https://icon-sets.iconify.design/charm/home/
+				https://icon-sets.iconify.design/bytesize/home/
+				https://icon-sets.iconify.design/fluent/home-24-regular/
+				https://icon-sets.iconify.design/fluent/home-24-filled/ -->
+			<span class="iconify" data-icon="codicon:home" data-width="40"></span>
+		</div>
+		<div class="canvas-wrapper">
+			<div class="buttons-wrapper">
+				<button>LinkedList</button>
+				<button>Stack</button>
+				<button>Queue</button>
+				<button>Binary Search Tree</button>
+			</div>
+			<canvas id="canvas" width="1000" height="600"></canvas>
+		</div>
+		<div class="functions-wrapper" id="linkedlist-functions">
+			<div class="function-arg">
+				<input class="arg-input" type="text" value=""/>
+				<button class="function-button">Add</button>
+			</div>
+			<div class="function-arg">
+				<input class="arg-input" type="text" value=""/>
+				<button class="function-button">Remove</button>
+		
+			</div>
+		</div>
+		<div class="functions-wrapper" id="stack-functions">
+			<div class="function-arg">
+				<input class="arg-input" type="text" value=""/>
+				<button class="function-button">Push</button>
+			</div>
+			<div class="function-arg">
+				<input class="arg-input" type="text" value=""/>
+				<button class="function-button">Pop</button>
+		
+			</div>
+		</div>
+		<div class="functions-wrapper" id="linkedlist-functions">
+			<div class="function-arg">
+				<input class="arg-input" type="text" value=""/>
+				<button class="function-button">Enqueue</button>
+			</div>
+			<div class="function-arg">
+				<input class="arg-input" type="text" value=""/>
+				<button class="function-button">Dequeue</button>
+		
+			</div>
+		</div>
+		<div class="functions-wrapper" id="linkedlist-functions">
+			<div class="function-arg">
+				<input class="arg-input" type="text" value=""/>
+				<button class="function-button">Insert</button>
+			</div>
+			<div class="function-arg">
+				<input class="arg-input" type="text" value=""/>
+				<button class="function-button">Delete</button>
+		
+			</div>
+		</div>
+		<div class="footer">
+			<h1>footer stuff goes here</h1>
+		</div>
 	</body>
 	<script src="main.js"></script>
+	<!-- iconify -->
+	<script src="https://code.iconify.design/3/3.0.0/iconify.min.js"></script>
 </html>

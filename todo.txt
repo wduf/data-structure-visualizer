@@ -8,10 +8,8 @@ TODO:
 
 
 
-- might not actually need _size(), size might be a built-in, check this
 - for animating trees, could add arrows showing where they went, or could try to do actual animations
 	- inspo (look at heap animation): https://www.cs.usfca.edu/~galles/visualization/Algorithms.html
-- separate classes into diff functions
 
 - encapsulate this, don't allow user to edit data structures
 - go through and re-comment it, only add comments when complex stuff is happening (GREAT LINK: https://blog.codinghorror.com/coding-without-comments/)
@@ -20,13 +18,5 @@ TODO:
 
 ___________________________________________________________________
 
-** CLEANUP
-✅ LList
-✅ stack
-✅ queue
-- bst
-
-- use string instead of tens, this allows negatives
 - turn deleting from array to splicing from array, update all instances where this matters
-- make null checks consistent
 - add scale_x and scale_y to all drawings

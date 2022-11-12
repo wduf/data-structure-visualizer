@@ -174,7 +174,7 @@ class BST
 	insert(val)
 	{
 		// if empty
-		if(!(this.root))
+		if(!this.root)
 		{
 			// add to root
 			this.root = new TreeNode(val);
@@ -289,6 +289,9 @@ class BST
 				// delete right child
 				prev.right = null;
 			}
+			// TODO: if last item in array, splice to previous item in array, do this for all deletes
+			//* NOTE: if you assign length to 4, it will truncate everything past first 5 nums, use this instead
+			//* once this is done, update all instances where this is used and this matters
 			// delete from arr
 			this.arr[i] = null;
 			return;
@@ -324,13 +327,11 @@ class BST
 				this.arr[i] = this.arr[(2 * i) + 1];
 				this.arr[(2 * i) + 1] = null;
 			}
-			console.log(this.arr[i]);	
 		}
 		// if 2 children
 		if(cnt === 2)
 		{
 			prev = iter;
-			console.log(prev.val);
 			let succ = iter.right;  // inorder successor
 			let j = ((2 * i) + 1);  // idx of right child in arr
 			// one right, all the way left
@@ -351,13 +352,14 @@ class BST
 	}
 	height()
 	{
-		if(!(this.root))
+		// if root null
+		if(!this.root)
 		{
 			return 0;
 		}
 		// search backwards in arr for first non-null/undefined/empty val and use that to calculate height
 		let last = (this.arr.length - 1);  // index of last value in arr
-		for(; !(this.arr[last]); last--);
+		for(; ((this.arr[last] != 0) && !this.arr[last]); last--);
 		return (Math.floor(Math.log2(last)) + 1);
 	}
 
@@ -368,8 +370,8 @@ const list = new LinkedList();  // (singly) linkedlist
 const stack = new Stack();  // stack
 const queue = new Queue();  // queue
 const bst = new BST();  // binary search tree
-// const heap = new Heap();  // heap
-// const map = new Map();  // dictionary/hashmap/map/symbol table
+// TODO: const heap = new Heap();  // heap
+// TODO: const map = new Map();  // dictionary/hashmap/map/symbol table
 
 // canvas
 const cvs = document.getElementById("canvas");
@@ -380,7 +382,10 @@ ctx.textAlign = "center";
 function drawLinkedList()
 {
 	const size = list.size;
-	const rad = (cvs.width / ((2 * size) + (size + 1)));  // node radius
+	const scale_x = (cvs.width / ((2 * size) + (size + 1)));  // scale based on width of canvas
+	const scale_y = (cvs.height / ((2 * size) + (size + 1)));  // scale based on height of canvas
+	// take the smaller of the two to ensure all nodes will fit
+	const rad = Math.min(scale_x, scale_y);  // node radius
 	const y = (cvs.height / 2);  // y value, horizontal line in center
 	for(let i = 0; i < size; i++)
 	{
@@ -411,7 +416,7 @@ function drawLinkedList()
 		ctx.arc(x, y, rad, 0, (Math.PI * 2));
 		// draw val
 		const val = list.at(i).val.toString();  // value @ node @ i
-		const shrink = Math.pow(val.length, 0.6);  // shrink factor for text
+		const shrink = Math.pow((val.length - ((val[0] === '-') ? 1 : 0)), 0.6);  // shrink factor for text
 		const font_size = (rad / shrink);
 		ctx.font = `${font_size}px Arial`;  // use rad as font size
 		ctx.fillStyle = "blue";
@@ -425,12 +430,9 @@ function drawStack()
 	const size = stack.size();
 	const half = (size / 2);
 	// TODO: eventually set height to sin and cos, inscribed in a circle w/ diameter 0.9 * width/height
-	let height = (0.18 * cvs.height);  // height of rectangle
-	// scale height if stack too tall
-	if((height * size) > (0.8 * cvs.height))
-	{
-		height = ((0.8 * cvs.height) / size);
-	}
+	// scale rectangle height based on how many items in stack
+	// NOTE: does not work if very thin canvas
+	let height = Math.min((0.18 * cvs.height), ((0.8 * cvs.height) / size)) ;  // height of rectangle
 	const width = 4 * height;  // width of rectangle
 	const x = (cvs.width / 2);  // x value, vertical line in center
 	const center_y = (cvs.height / 2);
@@ -443,7 +445,7 @@ function drawStack()
 		ctx.rect((x - (width / 2)), (y - (height / 2)), width, height);
 		// draw val
 		const val = stack.stack[i].toString();
-		const font_size = (height / (1.2 * Math.pow(val.length, 0.5)));
+		const font_size = (height / (1.2 * Math.pow((val.length - ((val[0] === '-') ? 1 : 0)), 0.5)));
 		ctx.fillStyle = "blue";
 		ctx.font = `${font_size}px Arial`;
 		ctx.fillText(val, x, (y + (0.35 * font_size)));  // y offset to center text in node
@@ -456,12 +458,8 @@ function drawQueue()
 	const size = queue.size();
 	const half = (size / 2);
 	// TODO: eventually set height to sin and cos, inscribed in a circle w/ diameter 0.9 * width/height
-	let height = (0.18 * cvs.height);  // height of rectangle
-	// scale height if stack too tall
-	if((height * size) > (0.8 * cvs.height))
-	{
-		height = ((0.8 * cvs.height) / size);
-	}
+	// scale rectangle height based on how many items in queue
+	let height = Math.min((0.18 * cvs.height), ((0.8 * cvs.height) / size)) ;  // height of rectangle
 	const width = 4 * height;  // width of rectangle
 	const x = (cvs.width / 2);  // x value, vertical line in center
 	const center_y = (cvs.height / 2);
@@ -474,7 +472,7 @@ function drawQueue()
 		ctx.rect((x - (width / 2)), (y - (height / 2)), width, height);
 		// draw val
 		const val = stack.stack[i].toString();
-		const font_size = (height / (1.2 * Math.pow(val.length, 0.5)));
+		const font_size = (height / (1.2 * Math.pow((val.length - ((val[0] === '-') ? 1 : 0)), 0.5)));
 		ctx.fillStyle = "blue";
 		ctx.font = `${font_size}px Arial`;
 		ctx.fillText(val, x, (y + (0.35 * font_size)));  // y offset to center text in node
@@ -485,12 +483,14 @@ function drawQueue()
 function drawBST()
 {
 	const h = bst.height();  // bst height
-	console.log(`h = ${h}`);
 	if(h === 0)
 	{
 		return;
 	}
-	const rad = (cvs.width / (2 * Math.pow(2, h)));  // node radius
+	const scale_x = (cvs.width / (2 * Math.pow(2, h)));
+	const scale_y = (cvs.height / (2 * h));
+	// scale based on size of canvas, make sure all nodes fit
+	const rad = Math.min(scale_x, scale_y); // node radius
 	const center_x = (cvs.width / 2);
 	const center_y = (cvs.height / 2);
 	// TODO: when sizing up, use scale_x, scale_y
@@ -507,7 +507,7 @@ function drawBST()
 			width *= 2;
 		}
 		const curr = i - width;
-		if(!(bst.arr[i]))
+		if((bst.arr[i] != 0) && !bst.arr[i])
 		{
 			continue;
 		}
@@ -532,7 +532,7 @@ function drawBST()
 		}
 		// draw val
 		const val = bst.arr[i].toString();  // value @ node @ i
-		const shrink = Math.pow(val.length, 0.6);  // shrink factor for text
+		const shrink = Math.pow((val.length - ((val[0] === '-') ? 1 : 0)), 0.6);  // shrink factor for text
 		const font_size = (rad / shrink);
 		ctx.font = `${font_size}px Arial`;  // use rad as font size
 		ctx.fillStyle = "blue";
@@ -543,12 +543,18 @@ function drawBST()
 
 function update()
 {
-	ctx.clearRect(0, 0, cvs.width, cvs.height);
 	// drawLinkedList();
-	// drawStack();
+	drawStack();
 	// drawQueue();
-	drawBST();
+	// drawBST();
 	// TODO: eventually replace fps system with update() call every time something is added/removed
 }
 
-update();
+const LL_fcns = document.getElementById("linkedlist-functions")
+
+draw(data_structure)
+{
+	// clear canvas
+	ctx.clearRect(0, 0, cvs.width, cvs.height);
+	if()
+}

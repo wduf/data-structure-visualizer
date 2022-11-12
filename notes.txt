@@ -7,7 +7,7 @@ ALL DATA STRUCTURES:
 - don't allow NaN as number (why tf does js recognize this as a number)
 - don't allow null
 - weird quirk with -01234 = -669? if leading zeros on a number that isn't zero, skip them when adding (part of sanitizing input)
-
+	- this still breaks it, sanitize the input
 
 BST and Heap:
 - insert duplicate either (1) does nothing, or (2) adds a (n + 1) after it
