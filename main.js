@@ -378,18 +378,21 @@ const cvs = document.getElementById("canvas");
 const ctx = cvs.getContext("2d");
 ctx.fillStyle = "red";
 ctx.textAlign = "center";
+const center_x = (cvs.width / 2);
+const center_y = (cvs.height / 2);
 
 function drawLinkedList()
 {
 	const size = list.size;
-	const scale_x = (cvs.width / ((2 * size) + (size + 1)));  // scale based on width of canvas
-	const scale_y = (cvs.height / ((2 * size) + (size + 1)));  // scale based on height of canvas
+	const scale_x = ((0.95 * cvs.width) / ((2 * size) + (size + 1)));  // scale based on width of canvas
+	const scale_y = (cvs.height / 4);  // scale based on height of canvas
 	// take the smaller of the two to ensure all nodes will fit
 	const rad = Math.min(scale_x, scale_y);  // node radius
 	const y = (cvs.height / 2);  // y value, horizontal line in center
 	for(let i = 0; i < size; i++)
 	{
-		const x = ((i + 1) * rad) + ((1 + (i * 2)) * rad);  // x value of current node
+		const x = (center_x + (3 * (i - ((size - 1) / 2)) * rad));
+		// const x = ((i + 1) * rad) + ((1 + (i * 2)) * rad);  // x value of current node
 		// if more than one node
 		if(i > 0)
 		{
@@ -408,7 +411,6 @@ function drawLinkedList()
 			ctx.closePath();
 			ctx.fillStyle = "black";
 			ctx.fill();
-
 		}
 		// draw node
 		ctx.beginPath();
@@ -416,10 +418,26 @@ function drawLinkedList()
 		ctx.arc(x, y, rad, 0, (Math.PI * 2));
 		// draw val
 		const val = list.at(i).val.toString();  // value @ node @ i
+		// delete leading zeros
+		for(let i = 0; i < (val.length - 1); i++)
+		{
+			if(val[i] == '-')
+			{
+				continue;
+			}
+			if(val[i] == 0)
+			{
+				val.splice(i);
+			}
+			else
+			{
+				break;
+			}
+		}
 		const shrink = Math.pow((val.length - ((val[0] === '-') ? 1 : 0)), 0.6);  // shrink factor for text
 		const font_size = (rad / shrink);
 		ctx.font = `${font_size}px Arial`;  // use rad as font size
-		ctx.fillStyle = "blue";
+		ctx.fillStyle = "red";
 		ctx.fillText(val, x, (y + (rad * (0.33 / shrink))));  // y offset to center text in node
 		ctx.stroke();
 	}
@@ -432,10 +450,9 @@ function drawStack()
 	// TODO: eventually set height to sin and cos, inscribed in a circle w/ diameter 0.9 * width/height
 	// scale rectangle height based on how many items in stack
 	// NOTE: does not work if very thin canvas
-	let height = Math.min((0.18 * cvs.height), ((0.8 * cvs.height) / size)) ;  // height of rectangle
+	let height = Math.min((0.2 * cvs.height), ((0.85 * cvs.height) / size)) ;  // height of rectangle
 	const width = 4 * height;  // width of rectangle
 	const x = (cvs.width / 2);  // x value, vertical line in center
-	const center_y = (cvs.height / 2);
 	for(let i = 0; i < size; i++)
 	{
 		const y = (center_y + ((half - 0.5 - i) * height));  // y value for this element
@@ -445,8 +462,24 @@ function drawStack()
 		ctx.rect((x - (width / 2)), (y - (height / 2)), width, height);
 		// draw val
 		const val = stack.stack[i].toString();
+		// delete leading zeros
+		for(let i = 0; i < (val.length - 1); i++)
+		{
+			if(val[i] == '-')
+			{
+				continue;
+			}
+			if(val[i] == 0)
+			{
+				val.splice(i);
+			}
+			else
+			{
+				break;
+			}
+		}
 		const font_size = (height / (1.2 * Math.pow((val.length - ((val[0] === '-') ? 1 : 0)), 0.5)));
-		ctx.fillStyle = "blue";
+		ctx.fillStyle = "red";
 		ctx.font = `${font_size}px Arial`;
 		ctx.fillText(val, x, (y + (0.35 * font_size)));  // y offset to center text in node
 		ctx.stroke();
@@ -459,10 +492,9 @@ function drawQueue()
 	const half = (size / 2);
 	// TODO: eventually set height to sin and cos, inscribed in a circle w/ diameter 0.9 * width/height
 	// scale rectangle height based on how many items in queue
-	let height = Math.min((0.18 * cvs.height), ((0.8 * cvs.height) / size)) ;  // height of rectangle
+	let height = Math.min((0.2 * cvs.height), ((0.85 * cvs.height) / size)) ;  // height of rectangle
 	const width = 4 * height;  // width of rectangle
 	const x = (cvs.width / 2);  // x value, vertical line in center
-	const center_y = (cvs.height / 2);
 	for(let i = 0; i < size; i++)
 	{
 		const y = (center_y + ((half - 0.5 - i) * height));  // y value for this element
@@ -471,9 +503,25 @@ function drawQueue()
 		ctx.fillStyle = "black";
 		ctx.rect((x - (width / 2)), (y - (height / 2)), width, height);
 		// draw val
-		const val = stack.stack[i].toString();
+		const val = queue.queue[i + queue.first].toString();
+		// delete leading zeros
+		for(let i = 0; i < (val.length - 1); i++)
+		{
+			if(val[i] == '-')
+			{
+				continue;
+			}
+			if(val[i] == 0)
+			{
+				val.splice(i);
+			}
+			else
+			{
+				break;
+			}
+		}
 		const font_size = (height / (1.2 * Math.pow((val.length - ((val[0] === '-') ? 1 : 0)), 0.5)));
-		ctx.fillStyle = "blue";
+		ctx.fillStyle = "red";
 		ctx.font = `${font_size}px Arial`;
 		ctx.fillText(val, x, (y + (0.35 * font_size)));  // y offset to center text in node
 		ctx.stroke();
@@ -488,11 +536,9 @@ function drawBST()
 		return;
 	}
 	const scale_x = (cvs.width / (2 * Math.pow(2, h)));
-	const scale_y = (cvs.height / (2 * h));
+	const scale_y = (cvs.height / (3 * h));
 	// scale based on size of canvas, make sure all nodes fit
 	const rad = Math.min(scale_x, scale_y); // node radius
-	const center_x = (cvs.width / 2);
-	const center_y = (cvs.height / 2);
 	// TODO: when sizing up, use scale_x, scale_y
 	let lvl = 0;  // curr level
 	let width = 1;  // how many nodes on this level
@@ -532,29 +578,197 @@ function drawBST()
 		}
 		// draw val
 		const val = bst.arr[i].toString();  // value @ node @ i
+		// delete leading zeros
+		for(let i = 0; i < (val.length - 1); i++)
+		{
+			if(val[i] == '-')
+			{
+				continue;
+			}
+			if(val[i] == 0)
+			{
+				val.splice(i);
+			}
+			else
+			{
+				break;
+			}
+		}
 		const shrink = Math.pow((val.length - ((val[0] === '-') ? 1 : 0)), 0.6);  // shrink factor for text
 		const font_size = (rad / shrink);
 		ctx.font = `${font_size}px Arial`;  // use rad as font size
-		ctx.fillStyle = "blue";
+		ctx.fillStyle = "red";
 		ctx.fillText(val, x, (y + (rad * (0.33 / shrink))));  // y offset to center text in node
 		ctx.stroke();
 	}
 }
 
-function update()
-{
-	// drawLinkedList();
-	drawStack();
-	// drawQueue();
-	// drawBST();
-	// TODO: eventually replace fps system with update() call every time something is added/removed
-}
+// buttons
+const ll_button = document.getElementById("linkedlist-button");
+const stk_button = document.getElementById("stack-button");
+const q_button = document.getElementById("queue-button");
+const bst_button = document.getElementById("bst-button");
+// function wrappers
+const ll_fcns = document.getElementById("linkedlist-functions");
+const stk_fcns = document.getElementById("stack-functions");
+const q_fcns = document.getElementById("queue-functions");
+const bst_fcns = document.getElementById("bst-functions");
+// inputs
+const add_input = document.getElementById("add-input");
+const remove_input = document.getElementById("remove-input");
+const push_input = document.getElementById("push-input");
+const enqueue_input = document.getElementById("enqueue-input");
+const insert_input = document.getElementById("insert-input");
+const delete_input = document.getElementById("delete-input");
 
-const LL_fcns = document.getElementById("linkedlist-functions")
-
-draw(data_structure)
+function draw(data_structure)
 {
 	// clear canvas
 	ctx.clearRect(0, 0, cvs.width, cvs.height);
-	if()
+	if(data_structure === "linkedlist")
+	{
+		console.log(data_structure);
+		// set button borders
+		ll_button.style.borderBottom = "none";
+		stk_button.style.borderBottom = "1px solid black";
+		q_button.style.borderBottom = "1px solid black";
+		bst_button.style.borderBottom = "1px solid black";
+		// show functions
+		ll_fcns.style.display = "flex";
+		stk_fcns.style.display = "none";
+		q_fcns.style.display = "none";
+		bst_fcns.style.display = "none";
+		drawLinkedList();
+	}
+	else if(data_structure === "stack")
+	{
+		// set button borders
+		ll_button.style.borderBottom = "1px solid black";
+		stk_button.style.borderBottom = "none";
+		q_button.style.borderBottom = "1px solid black";
+		bst_button.style.borderBottom = "1px solid black";
+		// show functions
+		ll_fcns.style.display = "none";
+		stk_fcns.style.display = "flex";
+		q_fcns.style.display = "none";
+		bst_fcns.style.display = "none";
+		drawStack();
+	}
+	else if(data_structure === "queue")
+	{
+		// set button borders
+		ll_button.style.borderBottom = "1px solid black";
+		stk_button.style.borderBottom = "1px solid black";
+		q_button.style.borderBottom = "none";
+		bst_button.style.borderBottom = "1px solid black";
+		// show functions
+		ll_fcns.style.display = "none";
+		stk_fcns.style.display = "none";
+		q_fcns.style.display = "flex";
+		bst_fcns.style.display = "none";
+		drawQueue();
+	}
+	else if(data_structure === "bst")
+	{
+		// set button borders
+		ll_button.style.borderBottom = "1px solid black";
+		stk_button.style.borderBottom = "1px solid black";
+		q_button.style.borderBottom = "1px solid black";
+		bst_button.style.borderBottom = "none";
+		// show functions
+		ll_fcns.style.display = "none";
+		stk_fcns.style.display = "none";
+		q_fcns.style.display = "none";
+		bst_fcns.style.display = "flex";
+		drawBST();
+	}
+	// ... more data structures to be added
+}
+
+function addHandler()
+{
+	const val = add_input.value;
+	if((val == parseInt(val) && (parseInt(val) !== NaN)))
+	{
+		ctx.clearRect(0, 0, cvs.width, cvs.height);
+		list.add(parseInt(val));
+		drawLinkedList();
+	}
+	add_input.value = "";
+}
+
+function removeHandler()
+{
+	const val = remove_input.value;
+	if((val == parseInt(val) && (parseInt(val) !== NaN)))
+	{
+		ctx.clearRect(0, 0, cvs.width, cvs.height);
+		list.remove(parseInt(val));
+		drawLinkedList();
+	}
+	remove_input.value = "";
+}
+
+function pushHandler()
+{
+	const val = push_input.value;
+	if((val == parseInt(val) && (parseInt(val) !== NaN)))
+	{
+		ctx.clearRect(0, 0, cvs.width, cvs.height);
+		stack.push(parseInt(val));
+		drawStack();
+	}
+	push_input.value = "";
+}
+
+function popHandler()
+{
+	ctx.clearRect(0, 0, cvs.width, cvs.height);
+	stack.pop();
+	drawStack();
+}
+
+function enqueueHandler()
+{
+	console.log("Dq");
+	const val = enqueue_input.value;
+	console.log(val);
+	if((val == parseInt(val) && (parseInt(val) !== NaN)))
+	{
+		ctx.clearRect(0, 0, cvs.width, cvs.height);
+		queue.enqueue(parseInt(val));
+		drawQueue();
+	}
+	enqueue_input.value = "";
+}
+
+function dequeueHandler()
+{
+	ctx.clearRect(0, 0, cvs.width, cvs.height);
+	queue.dequeue();
+	drawQueue();
+}
+
+function insertHandler()
+{
+	const val = insert_input.value;
+	if((val == parseInt(val) && (parseInt(val) !== NaN)))
+	{
+		ctx.clearRect(0, 0, cvs.width, cvs.height);
+		bst.insert(parseInt(val));
+		drawBST();
+	}
+	insert_input.value = "";
+}
+
+function deleteHandler()
+{
+	const val = delete_input.value;
+	if((val == parseInt(val) && (parseInt(val) !== NaN)))
+	{
+		ctx.clearRect(0, 0, cvs.width, cvs.height);
+		bst.delete(parseInt(val));
+		drawBST();
+	}
+	delete_input.value = "";
 }

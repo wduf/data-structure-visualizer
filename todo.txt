@@ -13,10 +13,6 @@ TODO:
 
 - encapsulate this, don't allow user to edit data structures
 - go through and re-comment it, only add comments when complex stuff is happening (GREAT LINK: https://blog.codinghorror.com/coding-without-comments/)
-- at the end of drawing, remove rectangle from top corner
-- add actual style, make pretty 
-
 ___________________________________________________________________
 
-- turn deleting from array to splicing from array, update all instances where this matters
-- add scale_x and scale_y to all drawings
+- add zoom-in feature (primarily for bst)
