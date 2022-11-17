@@ -16,3 +16,9 @@ TODO:
 ___________________________________________________________________
 
 - add zoom-in feature (primarily for bst)
+- add reset button for all
+- give directions (say values [-1000, 1000])
+
+- BUG: deleting head with many layers of children breaks it
+- if delete head with one child and child node has children, child nodes never updated
+- overhaul bst, make it so i use either nodes or array, not both

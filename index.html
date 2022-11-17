@@ -5,18 +5,18 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Interactive Data Structure Visualizer</title>
 		<link rel="stylesheet" href="style.css">
+		<!-- google fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com"/>
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;200;300;400;500;600;700&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet"/>
 	</head>
 	<body>
-		<div class="page-wrapper">
 		<div class="header">
-			<h1>{wd}</h1>
-			<!-- https://icon-sets.iconify.design/codicon/home/
-				https://icon-sets.iconify.design/bx/home-alt-2/
-				https://icon-sets.iconify.design/charm/home/
-				https://icon-sets.iconify.design/bytesize/home/
-				https://icon-sets.iconify.design/fluent/home-24-regular/
-				https://icon-sets.iconify.design/fluent/home-24-filled/ -->
-			<span class="iconify" data-icon="codicon:home" data-width="40"></span>
+			<div class="logo" data-aos="fade-in">
+				<!-- everything i've read says href="" is legal, just refreshes the page -->
+				<a href="https://wduf.github.io/">{<span class="logo-w">w</span><span class="logo-d">d</span>}</a>
+			</div>
+			<button class="source-code-button" onclick="openSourceCode()">Source Code</button>
 		</div>
 		<div class="canvas-wrapper">
 			<div class="buttons-wrapper">
@@ -67,12 +67,6 @@
 				<button class="function-button" onclick="deleteHandler()">Delete</button>
 			</div>
 		</div>
-		</div>
-		<div class="footer">
-			<button>source code</button>
-		</div>
 	</body>
 	<script src="main.js"></script>
-	<!-- iconify -->
-	<script src="https://code.iconify.design/3/3.0.0/iconify.min.js"></script>
 </html>

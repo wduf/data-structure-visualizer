@@ -265,9 +265,9 @@ class BST
 			return;
 		}
 		// node found @ iter
-		const cnt = ((iter.left) + (iter.right));  // child cound for iter
+		const cnt = ((!!iter.left) + (!!iter.right));  // child cound for iter
 		// if no children
-		if(cnt === 0)
+		if(cnt == 0)
 		{
 			// decrement size
 			this.size--;
@@ -326,6 +326,8 @@ class BST
 				// delete from arr
 				this.arr[i] = this.arr[(2 * i) + 1];
 				this.arr[(2 * i) + 1] = null;
+				//! bug here: if node has 1 child and that node has children, it breaks
+				// todo: 	need to run recursively on this to update other nodes
 			}
 		}
 		// if 2 children
@@ -535,7 +537,7 @@ function drawBST()
 	{
 		return;
 	}
-	const scale_x = (cvs.width / (2 * Math.pow(2, h)));
+	const scale_x = (cvs.width / (1.65 * Math.pow(2, h)));
 	const scale_y = (cvs.height / (3 * h));
 	// scale based on size of canvas, make sure all nodes fit
 	const rad = Math.min(scale_x, scale_y); // node radius
@@ -564,7 +566,6 @@ function drawBST()
 		ctx.arc(x, y, rad, 0, (2 * Math.PI));
 		ctx.strokeStyle = "black";
 		ctx.stroke();
-		// TODO: draw numbers w/ tens accounted for, could just convert to string and do string length (see if this fixes rounding?)
 		// TODO: lines between nodes: could use sin, cos to go 45% up the perimeter of the circle
 		// draw node
 		ctx.beginPath();
@@ -627,7 +628,6 @@ function draw(data_structure)
 	ctx.clearRect(0, 0, cvs.width, cvs.height);
 	if(data_structure === "linkedlist")
 	{
-		console.log(data_structure);
 		// set button borders
 		ll_button.style.borderBottom = "none";
 		stk_button.style.borderBottom = "1px solid black";
@@ -685,10 +685,15 @@ function draw(data_structure)
 	// ... more data structures to be added
 }
 
+function isValidInput(val)
+{
+	return ((val == parseInt(val)) && (parseInt(val) !== NaN) && (Math.abs(parseInt(val)) < 1001));
+}
+
 function addHandler()
 {
 	const val = add_input.value;
-	if((val == parseInt(val) && (parseInt(val) !== NaN)))
+	if(isValidInput(val))
 	{
 		ctx.clearRect(0, 0, cvs.width, cvs.height);
 		list.add(parseInt(val));
@@ -700,7 +705,7 @@ function addHandler()
 function removeHandler()
 {
 	const val = remove_input.value;
-	if((val == parseInt(val) && (parseInt(val) !== NaN)))
+	if(isValidInput(val))
 	{
 		ctx.clearRect(0, 0, cvs.width, cvs.height);
 		list.remove(parseInt(val));
@@ -712,7 +717,7 @@ function removeHandler()
 function pushHandler()
 {
 	const val = push_input.value;
-	if((val == parseInt(val) && (parseInt(val) !== NaN)))
+	if(isValidInput(val))
 	{
 		ctx.clearRect(0, 0, cvs.width, cvs.height);
 		stack.push(parseInt(val));
@@ -730,10 +735,9 @@ function popHandler()
 
 function enqueueHandler()
 {
-	console.log("Dq");
+	
 	const val = enqueue_input.value;
-	console.log(val);
-	if((val == parseInt(val) && (parseInt(val) !== NaN)))
+	if(isValidInput(val))
 	{
 		ctx.clearRect(0, 0, cvs.width, cvs.height);
 		queue.enqueue(parseInt(val));
@@ -752,7 +756,7 @@ function dequeueHandler()
 function insertHandler()
 {
 	const val = insert_input.value;
-	if((val == parseInt(val) && (parseInt(val) !== NaN)))
+	if(isValidInput(val))
 	{
 		ctx.clearRect(0, 0, cvs.width, cvs.height);
 		bst.insert(parseInt(val));
@@ -764,11 +768,16 @@ function insertHandler()
 function deleteHandler()
 {
 	const val = delete_input.value;
-	if((val == parseInt(val) && (parseInt(val) !== NaN)))
+	if(isValidInput(val))
 	{
 		ctx.clearRect(0, 0, cvs.width, cvs.height);
 		bst.delete(parseInt(val));
 		drawBST();
 	}
 	delete_input.value = "";
+}
+
+function openSourceCode()
+{
+	console.log("TODO: ADD LINK TO FINALIZED GITHUB REPO");
 }
