@@ -16,6 +16,7 @@ body
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 }
 
 .logo
@@ -63,15 +64,25 @@ body
 	color: white;
 }
 
-.page-container
+.source-code-button
 {
-	position: relative;
-	min-height: 100vh;
+	cursor: pointer;
+	font-size: 20px;
+	padding: 6px;
+	height: 1%;
+	border-radius: 8px;
+	color: white;
+	border: solid white 2px;
+	background-color: #171717;
+	-webkit-transition: 0.4s;
+	-o-transition: 0.4s;
+	transition: 0.4s;
 }
 
-.content-wrapper
+.source-code-button:hover
 {
-	padding-bottom: 8%;
+	color: red;
+	background-color: white;
 }
 
 .canvas-wrapper

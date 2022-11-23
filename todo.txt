@@ -1,24 +1,24 @@
 TODO:
-- add function to read input and call functions accordingly, based on the data structure that is currently shown
-- add canvas backend for the rest of the data structures:
-	- binary search tree (canvas: need to use log(2) to determine y offset and radius)
-	- heap (max-heap) tree (same as bst)
-	- hashmap (TBD, more complicated, do this last)
-	- graphs
+	- max heap (use array to store)
+	- graphs (a lot more complcated)
+	- hashmap (a lot a lot more complicated)
 
 
 
 - for animating trees, could add arrows showing where they went, or could try to do actual animations
 	- inspo (look at heap animation): https://www.cs.usfca.edu/~galles/visualization/Algorithms.html
 
-- encapsulate this, don't allow user to edit data structures
-- go through and re-comment it, only add comments when complex stuff is happening (GREAT LINK: https://blog.codinghorror.com/coding-without-comments/)
+- encapsulate this
 ___________________________________________________________________
 
-- add zoom-in feature (primarily for bst)
-- add reset button for all
+- add reset button for all (just set llist = new LinkedList())
 - give directions (say values [-1000, 1000])
+- add enter in entry box is same as clicking button
+- add res scaling for common resolutions
+- add shortcut to switch between structure tabs
+- add div popup that shows instructions and valid num range, have it be accessible by clicking a fancy 'i' somewhere (bottom right?)
 
-- BUG: deleting head with many layers of children breaks it
-- if delete head with one child and child node has children, child nodes never updated
-- overhaul bst, make it so i use either nodes or array, not both
+
+
+- add zoom-in feature (primarily for bst)
+- animate adding/removing everything

@@ -1,104 +1,110 @@
 class ListNode
 {
 	constructor(val, next)
-    {
-        this.val = val;  // node value
-        this.next = next;  // next node
-    }
+	{
+		this.val = val;  // node value
+		this.next = next;  // next node
+	}
 }
 
 class LinkedList
 {
 	constructor()
 	{
-		this.root = null;  // root node
-		this.tail = null  // tail node
-		this.size = 0;  // size of list / count of nodes
+		this.head = null;  // first node in linkedlist
+		this.tail = null;  // last node in linkedlist
+		this.size = 0;  // # of nodes in linkedlist
 	}
+
 	add(val)
 	{
-		// increase size
 		this.size++;
 		// if first node
 		if(this.size === 1)
 		{
-			// update root
-			this.root = new ListNode(val);
-			// update tail -> root
-			this.tail = this.root;
-			return;
+			// set head and tail to new node
+			this.head = new ListNode(val);
+			this.tail = this.head;
 		}
-		// add node to end
-		this.tail.next = new ListNode(val);
-		// advance tail
-		this.tail = this.tail.next;
+		// not first node
+		else
+		{
+			// add node to end
+			this.tail.next = new ListNode(val);
+			this.tail = this.tail.next;
+		}
 	}
+
 	remove(val)
 	{
-		// if list empty
-		if(this.size === 0)
+		// if linkedlist empty
+		if(!this.head)
 		{
 			return;
 		}
-		// if removing root
-		if(this.root.val === val)
+		// if removing head
+		if(this.head.val === val)
 		{
-			// if only node in list
+			// if only node in linkedlist
 			if(this.size === 1)
 			{
 				// empty list
-				this.root = null;
+				this.head = null;
 				this.tail = null;
 			}
-			// more than one node in list
+			// more than one node in linkedlist
 			else
 			{
-				// advance root
-				this.root = this.root.next;
+				// advance head
+				this.head = this.head.next;
 			}
-			// decrease size
 			this.size--;
-			return;
 		}
-		let iter = this.root;  // iterator
-		let prev = iter;  // node before iter
-		while(iter)
+		// removing node that isn't head or not in linkedlist
+		else
 		{
-			// if val found
-			if(iter.val === val)
+			let iter = this.head;  // iterator
+			let prev = iter;  // previous node
+			// go through all nodes in linkedlist
+			while(iter)
 			{
-				// skip over iter
-				prev.next = iter.next;
-				// decrease size
-				this.size--;
-				return;
+				// if val found
+				if(iter.val === val)
+				{
+					// skip iter
+					prev.next = iter.next;
+					this.size--;
+					return
+				}
+				prev = iter;
+				iter = iter.next;
 			}
-			// update prev
-			prev = iter;
-			// advance iter
-			iter = iter.next;
 		}
 	}
-	// size is a built-in
+
 	at(idx)
 	{
-		// if idx is out of range
+		// if idx out of range
 		if(idx >= this.size)
 		{
 			return -1;
 		}
-		let iter = this.root;  // iterator
+		let iter = this.head;
+		// find node @ idx
 		for(let i = 0; iter; i++)
 		{
-			// if node @ idx reached
+			// node @ idx
 			if(i === idx)
 			{
-				// return it
 				return iter;
 			}
-			// advance iter
 			iter = iter.next;
 		}
+	}
+
+	size_()
+	{
+		return this.size;
 	}
 }
 
@@ -108,14 +114,17 @@ class Stack
 	{
 		this.stack = [];
 	}
+
 	push(val)
 	{
 		this.stack.push(val);
 	}
+
 	pop()
 	{
 		this.stack.pop();
 	}
+
 	size()
 	{
 		return this.stack.length;
@@ -127,26 +136,27 @@ class Queue
 	constructor()
 	{
 		this.queue = [];
-		// NOTE: using first and last instead of shift()/unshift() for O(1) enqueue()/dequeue()
-		this.first = 0;  // index of first item in queue
-		this.last = 0;  // index past last item in queue
+		// NOTE: using first and last index instead of shift() and unshift() for o(1) enqueue() and dequeue()
+		this.first = 0;  // index of first num in queue
+		this.last = 0;  // index of last num in queue
 	}
+
 	enqueue(val)
 	{
 		// add to end
 		this.queue[this.last] = val;
-		// update last
 		this.last++;
 	}
+
 	dequeue()
 	{
 		// if queue not empty
 		if(this.last > this.first)
 		{
-			// update first
 			this.first++;
 		}
 	}
+
 	size()
 	{
 		return (this.last - this.first);
@@ -163,285 +173,205 @@ class TreeNode
 	}
 }
 
-class BST
+class BinarySearchTree
 {
 	constructor()
 	{
-		this.root = null;  // root node
-		this.size = 0;  // # of nodes
-		this.arr = [];  // array representation of bst (identical to standard heap representation), starts @ idx 1
+		this.root = null;  // root node of tree
 	}
+
 	insert(val)
 	{
-		// if empty
+		// if tree empty
 		if(!this.root)
 		{
-			// add to root
+			// set root
 			this.root = new TreeNode(val);
-			// add to arr
-			this.arr[1] = val;
-			// increment size
-			this.size++;
-			return;
 		}
-		// NOTE: need node and int b/c we have to update the node and array
-		let iter = this.root;  // iterator
-		let prev = iter;  // node before iter
-		let i = 1;  // index in arr
-		while(iter)
-		{
-			// update prev
-			prev = iter;
-			// if val already in tree
-			if(val === iter.val)
-			{
-				// don't add it, duplicates not allowed
-				return;
-			}
-			// update i
-			i *= 2;
-			// if val greater than iter val
-			if(val > iter.val)
-			{
-				// right child
-				iter = iter.right;
-				i++;
-			}
-			// if val less than iter val
-			else
-			{
-				// left child
-				iter = iter.left;
-			}
-		}
-		// increment size
-		this.size++;
-		// if val greater than prev val
-		if(val > prev.val)
-		{
-			// prev right child = new node
-			prev.right = new TreeNode(val);
-		}
-		// if val less than prev val
+		// tree not empty
 		else
 		{
-			// prev left child = new node
-			prev.left = new TreeNode(val);
+			let iter = this.root;  // iterator
+			let prev = iter;  // previous/parent node
+			while(iter)
+			{
+				// if duplicate val (not allowed)
+				if(val === iter.val)
+				{
+					return;
+				}
+				prev = iter;
+				// set to left/right child
+				iter = ((val < iter.val) ? iter.left : iter.right);
+			}
+			// insert left child
+			if(val < prev.val)
+			{
+				prev.left = new TreeNode(val);
+			}
+			// insert right child
+			else
+			{
+				prev.right = new TreeNode(val);
+			}
 		}
-		// add to arr
-		this.arr[i] = val;
 	}
+
 	delete(val)
 	{
 		let iter = this.root;  // iterator
-		let prev = iter;  // node before iter
-		let i = 1;  // idx in arr
-		while(iter)
+		let prev = iter;  // previous node
+		// while iter not null and iter val not equal to val
+		while(iter && (iter.val !== val))
 		{
-			// if node found
-			if(iter.val === val)
-			{
-				break;
-			}
-			// update prev
 			prev = iter;
-			// update i
-			i *= 2;
-			// if val greater than iter val
-			if(val > iter.val)
-			{
-				i++;
-				iter = iter.right;
-			}
-			// if val less than iter val
-			else
-			{
-				iter = iter.left;
-			}
+			// set to left/right child
+			iter = ((val < iter.val) ? iter.left : iter.right);
 		}
-		// if node not found
+		// node not in tree
 		if(!iter)
 		{
 			return;
 		}
-		// node found @ iter
-		const cnt = ((!!iter.left) + (!!iter.right));  // child cound for iter
-		// if no children
-		if(cnt == 0)
+		const cnt = (!!iter.left + !!iter.right);  // child count for iter
+		// no children
+		if(cnt === 0)
 		{
-			// decrement size
-			this.size--;
-			// if root with no children		
-			if(val === this.root.val)
+			// delete root with no children
+			if(iter === this.root)
 			{
-				// delete root
 				this.root = null;
 			}
-			// if prev left child
+			// delete prev left child
 			else if(val < prev.val)
 			{
-				// delete left child
 				prev.left = null;
 			}
-			// if prev right child
+			// delete right child
 			else
 			{
-				// delete right child
 				prev.right = null;
 			}
-			// TODO: if last item in array, splice to previous item in array, do this for all deletes
-			//* NOTE: if you assign length to 4, it will truncate everything past first 5 nums, use this instead
-			//* once this is done, update all instances where this is used and this matters
-			// delete from arr
-			this.arr[i] = null;
-			return;
 		}
-		// if 1 child
-		if(cnt === 1)
+		// 1 child
+		else if(cnt === 1)
 		{
-			// decrement size
-			this.size--;
-			// if left child
-			if(iter.left)
+			// replace root
+			if(val === this.root.val)
 			{
-				// replace this node with left child
-				iter.val = iter.left.val;
-				iter.left = iter.left.left;
-				iter.right = iter.left.right;
-				// delete left child
-				iter.left = null;
-				// delete from arr
-				this.arr[i] = this.arr[2 * i];
-				this.arr[2 * i] = null;
+				this.root = (this.root.left ? this.root.left : this.root.right);
 			}
-			// if right child
+			// left child
+			else if(val < prev.val)
+			{
+				// skip over left child
+				prev.left = (iter.left ? iter.left : iter.right);
+			}
+			// right child
 			else
 			{
-				// replace this node with right child
-				iter.val = iter.right.val;
-				iter.left = iter.right.left;
-				iter.right = iter.right.right;
-				// delete right child
-				iter.right = null;
-				// delete from arr
-				this.arr[i] = this.arr[(2 * i) + 1];
-				this.arr[(2 * i) + 1] = null;
-				//! bug here: if node has 1 child and that node has children, it breaks
-				// todo: 	need to run recursively on this to update other nodes
+				// skip over right child
+				prev.right = (iter.left ? iter.left : iter.right);
 			}
 		}
-		// if 2 children
-		if(cnt === 2)
+		// 2 children
+		else
 		{
+			// prev stays the parent node
 			prev = iter;
-			let succ = iter.right;  // inorder successor
-			let j = ((2 * i) + 1);  // idx of right child in arr
+			let suc = iter.right;  // inorder successor of iter
 			// one right, all the way left
-			while(succ.left)
+			while(suc.left)
 			{
-				prev = succ;
-				succ = succ.left;
-				j *= 2;
+				prev = suc;
+				suc = suc.left;
 			}
-			const succ_val = succ.val;  // inorder successor val
-			// update arr
-			this.arr[i] = this.arr[j];
-			// delete succ
-			this.delete(succ_val);
-			// set iter val to succ val
-			iter.val = succ_val;
+			const suc_val = suc.val;
+			// recursively delete suc val
+			this.delete(suc_val);
+			// set iter val to (now deleted) suc val
+			iter.val = suc_val;
 		}
 	}
+
 	height()
 	{
-		// if root null
-		if(!this.root)
+		const f = (node) =>
 		{
-			return 0;
+			if(!node)
+			{
+				return 0;
+			}
+			// return max height between left and right child
+			return Math.max((1 + f(node.left)), (1 + f(node.right)));
 		}
-		// search backwards in arr for first non-null/undefined/empty val and use that to calculate height
-		let last = (this.arr.length - 1);  // index of last value in arr
-		for(; ((this.arr[last] != 0) && !this.arr[last]); last--);
-		return (Math.floor(Math.log2(last)) + 1);
-	}
 
+		return f(this.root);
+	}
 }
 
+// TODO:
+class MaxHeap
+{}
+
 // data structures
-const list = new LinkedList();  // (singly) linkedlist
-const stack = new Stack();  // stack
-const queue = new Queue();  // queue
-const bst = new BST();  // binary search tree
-// TODO: const heap = new Heap();  // heap
-// TODO: const map = new Map();  // dictionary/hashmap/map/symbol table
+const llist = new LinkedList();  // (singly) linkedlist
+const stack = new Stack();
+const queue = new Queue();
+const bst = new BinarySearchTree();
+// TODO: add maxHeap, map, graph eventually
 
 // canvas
 const cvs = document.getElementById("canvas");
 const ctx = cvs.getContext("2d");
-ctx.fillStyle = "red";
-ctx.textAlign = "center";
-const center_x = (cvs.width / 2);
-const center_y = (cvs.height / 2);
+ctx.textAlign = "center";  // align nums in center of their container
+const center_x = (cvs.width / 2);  // horizontal center of canvas
+const center_y = (cvs.height / 2);  // vertical center of canvas
 
 function drawLinkedList()
 {
-	const size = list.size;
-	const scale_x = ((0.95 * cvs.width) / ((2 * size) + (size + 1)));  // scale based on width of canvas
-	const scale_y = (cvs.height / 4);  // scale based on height of canvas
-	// take the smaller of the two to ensure all nodes will fit
+	const size = llist.size_();
+	const scale_x = ((0.95 * cvs.width) / ((3 * size) + 1));  // scale radius based on width
+	const scale_y = (cvs.height / 4);  // scale radius based on height
+	// take the smaller of the two to ensure all nodes fit
 	const rad = Math.min(scale_x, scale_y);  // node radius
-	const y = (cvs.height / 2);  // y value, horizontal line in center
+	// go through nodes in linkedlist
 	for(let i = 0; i < size; i++)
 	{
-		const x = (center_x + (3 * (i - ((size - 1) / 2)) * rad));
-		// const x = ((i + 1) * rad) + ((1 + (i * 2)) * rad);  // x value of current node
-		// if more than one node
+		const x = (center_x + (3 * (i - ((size - 1) / 2)) * rad));  // x value of node
+		// if not head
 		if(i > 0)
 		{
-			const left = (x - rad);  // left side of current node
-			const arrow = (rad * 0.2);  // offset of arrow root
-			// draw line between this and the previous node
+			const left = (x - rad);  // left edge of node
+			const arrow = (rad * 0.2);  // offset of arrow head
+			// draw arrow line
 			ctx.beginPath();
-			ctx.moveTo((left - rad), y);
-			ctx.lineTo(left, y);
+			ctx.moveTo((left - rad), center_y);
+			ctx.lineTo(left, center_y);
+			ctx.strokeStyle = "black";
 			ctx.stroke();
-			// draw triangle at end of arrow
+			// draw arrow head
 			ctx.beginPath();
-			ctx.moveTo(left, y);
-			ctx.lineTo((left - arrow), (y - arrow));
-			ctx.lineTo((left - arrow), (y + arrow));
+			ctx.moveTo(left, center_y);
+			ctx.lineTo((left - arrow), (center_y - arrow));
+			ctx.lineTo((left - arrow), (center_y + arrow));
 			ctx.closePath();
 			ctx.fillStyle = "black";
 			ctx.fill();
 		}
 		// draw node
-		ctx.beginPath();
-		ctx.fillStyle = "black";
-		ctx.arc(x, y, rad, 0, (Math.PI * 2));
-		// draw val
-		const val = list.at(i).val.toString();  // value @ node @ i
-		// delete leading zeros
-		for(let i = 0; i < (val.length - 1); i++)
-		{
-			if(val[i] == '-')
-			{
-				continue;
-			}
-			if(val[i] == 0)
-			{
-				val.splice(i);
-			}
-			else
-			{
-				break;
-			}
-		}
-		const shrink = Math.pow((val.length - ((val[0] === '-') ? 1 : 0)), 0.6);  // shrink factor for text
-		const font_size = (rad / shrink);
-		ctx.font = `${font_size}px Arial`;  // use rad as font size
-		ctx.fillStyle = "red";
-		ctx.fillText(val, x, (y + (rad * (0.33 / shrink))));  // y offset to center text in node
+		ctx.beginPath()
+		ctx.arc(x, center_y, rad, 0, (Math.PI * 2));
+		ctx.strokeStyle = "black";
 		ctx.stroke();
+		// draw val
+		const val = llist.at(i).val.toString();  // value at node
+		const shrink = Math.pow((val.length - (val[0] === '-')), 0.6);  // shrink factor for text
+		const font_size = (rad / shrink);
+		ctx.font = `${font_size}px Arial`;
+		ctx.fillStyle = "red";
+		// center text in node
+		ctx.fillText(val, x, (center_y + (rad * (0.33 / shrink))));
 	}
 }
 
@@ -449,41 +379,22 @@ function drawStack()
 {
 	const size = stack.size();
 	const half = (size / 2);
-	// TODO: eventually set height to sin and cos, inscribed in a circle w/ diameter 0.9 * width/height
-	// scale rectangle height based on how many items in stack
-	// NOTE: does not work if very thin canvas
-	let height = Math.min((0.2 * cvs.height), ((0.85 * cvs.height) / size)) ;  // height of rectangle
-	const width = 4 * height;  // width of rectangle
-	const x = (cvs.width / 2);  // x value, vertical line in center
+	const height = Math.min((0.2 * cvs.height), ((0.85 * cvs.height) / size)) ;  // height of rectangle
+	const width = (4 * height);  // width of rectangle
+	// go through all vals in stack
 	for(let i = 0; i < size; i++)
 	{
 		const y = (center_y + ((half - 0.5 - i) * height));  // y value for this element
-		// draw element
+		// draw rect
 		ctx.beginPath();
 		ctx.fillStyle = "black";
-		ctx.rect((x - (width / 2)), (y - (height / 2)), width, height);
+		ctx.rect((center_x - (width / 2)), (y - (height / 2)), width, height);
 		// draw val
 		const val = stack.stack[i].toString();
-		// delete leading zeros
-		for(let i = 0; i < (val.length - 1); i++)
-		{
-			if(val[i] == '-')
-			{
-				continue;
-			}
-			if(val[i] == 0)
-			{
-				val.splice(i);
-			}
-			else
-			{
-				break;
-			}
-		}
-		const font_size = (height / (1.2 * Math.pow((val.length - ((val[0] === '-') ? 1 : 0)), 0.5)));
+		const font_size = (height / (1.2 * Math.pow((val.length - (val[0] === '-')), 0.5)));
 		ctx.fillStyle = "red";
 		ctx.font = `${font_size}px Arial`;
-		ctx.fillText(val, x, (y + (0.35 * font_size)));  // y offset to center text in node
+		ctx.fillText(val, center_x, (y + (0.35 * font_size)));  // y offset to center text in node
 		ctx.stroke();
 	}
 }
@@ -492,127 +403,86 @@ function drawQueue()
 {
 	const size = queue.size();
 	const half = (size / 2);
-	// TODO: eventually set height to sin and cos, inscribed in a circle w/ diameter 0.9 * width/height
-	// scale rectangle height based on how many items in queue
-	let height = Math.min((0.2 * cvs.height), ((0.85 * cvs.height) / size)) ;  // height of rectangle
-	const width = 4 * height;  // width of rectangle
-	const x = (cvs.width / 2);  // x value, vertical line in center
+	const height = Math.min((0.2 * cvs.height), ((0.85 * cvs.height) / size)) ;  // height of rectangle
+	const width = (4 * height);  // width of rectangle
+	// go through all vals in queue
 	for(let i = 0; i < size; i++)
 	{
 		const y = (center_y + ((half - 0.5 - i) * height));  // y value for this element
-		// draw element
+		// draw rect
 		ctx.beginPath();
 		ctx.fillStyle = "black";
-		ctx.rect((x - (width / 2)), (y - (height / 2)), width, height);
+		ctx.rect((center_x - (width / 2)), (y - (height / 2)), width, height);
 		// draw val
 		const val = queue.queue[i + queue.first].toString();
-		// delete leading zeros
-		for(let i = 0; i < (val.length - 1); i++)
-		{
-			if(val[i] == '-')
-			{
-				continue;
-			}
-			if(val[i] == 0)
-			{
-				val.splice(i);
-			}
-			else
-			{
-				break;
-			}
-		}
-		const font_size = (height / (1.2 * Math.pow((val.length - ((val[0] === '-') ? 1 : 0)), 0.5)));
+		const font_size = (height / (1.2 * Math.pow((val.length - (val[0] === '-')), 0.5)));
 		ctx.fillStyle = "red";
 		ctx.font = `${font_size}px Arial`;
-		ctx.fillText(val, x, (y + (0.35 * font_size)));  // y offset to center text in node
+		ctx.fillText(val, center_x, (y + (0.35 * font_size)));  // y offset to center text in node
 		ctx.stroke();
 	}
 }
 
-function drawBST()
+function drawBinarySearchTree()
 {
-	const h = bst.height();  // bst height
-	if(h === 0)
-	{
-		return;
-	}
-	const scale_x = (cvs.width / (1.65 * Math.pow(2, h)));
-	const scale_y = (cvs.height / (3 * h));
+	const h = bst.height();  // height of bst
+	const scale_x = (cvs.width / (1.65 * Math.pow(2, h)));  // scale rad size based on cvs width
+	const scale_y = (cvs.height / (3 * h));  // scale rad size based on cvs height
 	// scale based on size of canvas, make sure all nodes fit
 	const rad = Math.min(scale_x, scale_y); // node radius
-	// TODO: when sizing up, use scale_x, scale_y
-	let lvl = 0;  // curr level
-	let width = 1;  // how many nodes on this level
-	// 0 is null
-	for(let i = 1; i < bst.arr.length; i++)
+
+	const f = (node, idx, lvl, width) =>
 	{
-		// if end of level reached
-		if(i === (2 * width))
+		// empty node
+		if(!node)
 		{
-			// move down a level
-			lvl++;
-			width *= 2;
+			return;
 		}
-		const curr = i - width;
-		if((bst.arr[i] != 0) && !bst.arr[i])
-		{
-			continue;
-		}
-		// draw node
-		const y = (center_y + ((lvl - ((h - 1) / 2)) * 3 * rad));
-		const x = (center_x + ((curr - ((width - 1) / 2)) * 1.5  * (Math.pow(2, h) / width) * rad));
+		const x = (center_x + ((idx - ((width - 1) / 2)) * 1.5 * (Math.pow(2, h) / width) * rad));  // x value of node
+		const y = (center_y + ((lvl - ((h - 1) / 2)) * 3 * rad));  // y value of node
+		// draw outline
 		ctx.beginPath();
 		ctx.arc(x, y, rad, 0, (2 * Math.PI));
 		ctx.strokeStyle = "black";
 		ctx.stroke();
-		// TODO: lines between nodes: could use sin, cos to go 45% up the perimeter of the circle
-		// draw node
-		ctx.beginPath();
-		ctx.moveTo(x, (y - rad));
-		if(i > 1)
+		// draw arrow (if not root)
+		if(lvl > 0)
 		{
 			// draw line
-			ctx.lineTo((x + (0.75 * (Math.pow(2, (h - lvl))) * ((curr % 2 === 0) ? rad : -rad))), (y - (2 * rad)));
+			ctx.beginPath();
+			ctx.moveTo(x, (y - rad));
+			ctx.lineTo((x + (0.75 * (Math.pow(2, (h - lvl))) * ((idx % 2 === 0) ? rad : -rad))), (y - (2 * rad)));
 			ctx.strokeStyle = "black";
 			ctx.stroke();
 		}
 		// draw val
-		const val = bst.arr[i].toString();  // value @ node @ i
-		// delete leading zeros
-		for(let i = 0; i < (val.length - 1); i++)
-		{
-			if(val[i] == '-')
-			{
-				continue;
-			}
-			if(val[i] == 0)
-			{
-				val.splice(i);
-			}
-			else
-			{
-				break;
-			}
-		}
+		const val = node.val.toString();
 		const shrink = Math.pow((val.length - ((val[0] === '-') ? 1 : 0)), 0.6);  // shrink factor for text
 		const font_size = (rad / shrink);
 		ctx.font = `${font_size}px Arial`;  // use rad as font size
 		ctx.fillStyle = "red";
 		ctx.fillText(val, x, (y + (rad * (0.33 / shrink))));  // y offset to center text in node
 		ctx.stroke();
+		// run on both children
+		idx *= 2;
+		lvl++;
+		width *= 2;
+		f(node.left, idx, lvl, width);
+		f(node.right, (idx + 1), lvl, width);
 	}
+
+	f(bst.root, 0, 0, 1);
 }
 
 // buttons
-const ll_button = document.getElementById("linkedlist-button");
-const stk_button = document.getElementById("stack-button");
-const q_button = document.getElementById("queue-button");
+const llist_button = document.getElementById("linkedlist-button");
+const stack_button = document.getElementById("stack-button");
+const queue_button = document.getElementById("queue-button");
 const bst_button = document.getElementById("bst-button");
 // function wrappers
-const ll_fcns = document.getElementById("linkedlist-functions");
-const stk_fcns = document.getElementById("stack-functions");
-const q_fcns = document.getElementById("queue-functions");
+const llist_fcns = document.getElementById("linkedlist-functions");
+const stack_fcns = document.getElementById("stack-functions");
+const queue_fcns = document.getElementById("queue-functions");
 const bst_fcns = document.getElementById("bst-functions");
 // inputs
 const add_input = document.getElementById("add-input");
@@ -629,58 +499,58 @@ function draw(data_structure)
 	if(data_structure === "linkedlist")
 	{
 		// set button borders
-		ll_button.style.borderBottom = "none";
-		stk_button.style.borderBottom = "1px solid black";
-		q_button.style.borderBottom = "1px solid black";
+		llist_button.style.borderBottom = "none";
+		stack_button.style.borderBottom = "1px solid black";
+		queue_button.style.borderBottom = "1px solid black";
 		bst_button.style.borderBottom = "1px solid black";
 		// show functions
-		ll_fcns.style.display = "flex";
-		stk_fcns.style.display = "none";
-		q_fcns.style.display = "none";
+		llist_fcns.style.display = "flex";
+		stack_fcns.style.display = "none";
+		queue_fcns.style.display = "none";
 		bst_fcns.style.display = "none";
 		drawLinkedList();
 	}
 	else if(data_structure === "stack")
 	{
 		// set button borders
-		ll_button.style.borderBottom = "1px solid black";
-		stk_button.style.borderBottom = "none";
-		q_button.style.borderBottom = "1px solid black";
+		llist_button.style.borderBottom = "1px solid black";
+		stack_button.style.borderBottom = "none";
+		queue_button.style.borderBottom = "1px solid black";
 		bst_button.style.borderBottom = "1px solid black";
 		// show functions
-		ll_fcns.style.display = "none";
-		stk_fcns.style.display = "flex";
-		q_fcns.style.display = "none";
+		llist_fcns.style.display = "none";
+		stack_fcns.style.display = "flex";
+		queue_fcns.style.display = "none";
 		bst_fcns.style.display = "none";
 		drawStack();
 	}
 	else if(data_structure === "queue")
 	{
 		// set button borders
-		ll_button.style.borderBottom = "1px solid black";
-		stk_button.style.borderBottom = "1px solid black";
-		q_button.style.borderBottom = "none";
+		llist_button.style.borderBottom = "1px solid black";
+		stack_button.style.borderBottom = "1px solid black";
+		queue_button.style.borderBottom = "none";
 		bst_button.style.borderBottom = "1px solid black";
 		// show functions
-		ll_fcns.style.display = "none";
-		stk_fcns.style.display = "none";
-		q_fcns.style.display = "flex";
+		llist_fcns.style.display = "none";
+		stack_fcns.style.display = "none";
+		queue_fcns.style.display = "flex";
 		bst_fcns.style.display = "none";
 		drawQueue();
 	}
 	else if(data_structure === "bst")
 	{
 		// set button borders
-		ll_button.style.borderBottom = "1px solid black";
-		stk_button.style.borderBottom = "1px solid black";
-		q_button.style.borderBottom = "1px solid black";
+		llist_button.style.borderBottom = "1px solid black";
+		stack_button.style.borderBottom = "1px solid black";
+		queue_button.style.borderBottom = "1px solid black";
 		bst_button.style.borderBottom = "none";
 		// show functions
-		ll_fcns.style.display = "none";
-		stk_fcns.style.display = "none";
-		q_fcns.style.display = "none";
+		llist_fcns.style.display = "none";
+		stack_fcns.style.display = "none";
+		queue_fcns.style.display = "none";
 		bst_fcns.style.display = "flex";
-		drawBST();
+		drawBinarySearchTree();
 	}
 	// ... more data structures to be added
 }
@@ -696,7 +566,7 @@ function addHandler()
 	if(isValidInput(val))
 	{
 		ctx.clearRect(0, 0, cvs.width, cvs.height);
-		list.add(parseInt(val));
+		llist.add(parseInt(val));
 		drawLinkedList();
 	}
 	add_input.value = "";
@@ -708,7 +578,7 @@ function removeHandler()
 	if(isValidInput(val))
 	{
 		ctx.clearRect(0, 0, cvs.width, cvs.height);
-		list.remove(parseInt(val));
+		llist.remove(parseInt(val));
 		drawLinkedList();
 	}
 	remove_input.value = "";
@@ -760,7 +630,7 @@ function insertHandler()
 	{
 		ctx.clearRect(0, 0, cvs.width, cvs.height);
 		bst.insert(parseInt(val));
-		drawBST();
+		drawBinarySearchTree();
 	}
 	insert_input.value = "";
 }
@@ -772,12 +642,20 @@ function deleteHandler()
 	{
 		ctx.clearRect(0, 0, cvs.width, cvs.height);
 		bst.delete(parseInt(val));
-		drawBST();
+		drawBinarySearchTree();
 	}
 	delete_input.value = "";
 }
 
 function openSourceCode()
 {
-	console.log("TODO: ADD LINK TO FINALIZED GITHUB REPO");
+	window.open("https://github.com/wduf/interactive-data-structure-visualizer/tree/stable")
 }
+
+// on load
+alert(
+`Hi!
+
+Thanks for using my Interactive Data Structure Visualizer. I work on this when I have free time, so updates might be a little slow. I will add more features, data structures, and quality of life changes in the future.
+
+Numbers can be between -1000 and 1000 (inclusive).`);
