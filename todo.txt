@@ -3,22 +3,16 @@ TODO:
 	- graphs (a lot more complcated)
 	- hashmap (a lot a lot more complicated)
 
-
-
 - for animating trees, could add arrows showing where they went, or could try to do actual animations
 	- inspo (look at heap animation): https://www.cs.usfca.edu/~galles/visualization/Algorithms.html
 
-- encapsulate this
+- encapsulate this (figure out how in js)
 ___________________________________________________________________
 
-- add reset button for all (just set llist = new LinkedList())
-- give directions (say values [-1000, 1000])
 - add enter in entry box is same as clicking button
-- add res scaling for common resolutions
-- add shortcut to switch between structure tabs
+- add shortcut to switch between structure tabs (arrow keys, make scalable with tab nums, not manual)
 - add div popup that shows instructions and valid num range, have it be accessible by clicking a fancy 'i' somewhere (bottom right?)
-
-
+- add res scaling for common resolutions
 
 - add zoom-in feature (primarily for bst)
 - animate adding/removing everything

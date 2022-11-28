@@ -31,41 +31,45 @@
 		</div>
 		<div class="functions-wrapper" id="linkedlist-functions">
 			<div class="function-wrapper">
-				<input class="arg-input" id="add-input" type="text" value=""/>
+				<input class="arg-input" id="add-input" type="text" value="" onkeydown="addHandler(event)"/>
 				<button class="function-button" onclick="addHandler()">Add</button>
 			</div>
 			<div class="function-wrapper">
-				<input class="arg-input" id="remove-input" type="text" value=""/>
+				<input class="arg-input" id="remove-input" type="text" value="" onkeydown="removeHandler(event)"/>
 				<button class="function-button" onclick="removeHandler()">Remove</button>
 			</div>
+			<button class="reset-button" onclick="resetLinkedListHandler()">Reset</button>
 		</div>
 		<div class="functions-wrapper" id="stack-functions">
 			<div class="function-wrapper">
-				<input class="arg-input" id="push-input" type="text" value=""/>
+				<input class="arg-input" id="push-input" type="text" value="" onkeydown="pushHandler(event)"/>
 				<button class="function-button" onclick="pushHandler()">Push</button>
 			</div>
 			<div class="function-wrapper">
 				<button class="function-button" onclick="popHandler()">Pop</button>
 			</div>
+			<button class="reset-button" onclick="resetStackHandler()">Reset</button>
 		</div>
 		<div class="functions-wrapper" id="queue-functions">
 			<div class="function-wrapper">
-				<input class="arg-input" id="enqueue-input" type="text" value=""/>
+				<input class="arg-input" id="enqueue-input" type="text" value="" onkeydown="enqueueHandler(event)"/>
 				<button class="function-button" onclick="enqueueHandler()">Enqueue</button>
 			</div>
 			<div class="function-wrapper">
-				<button class="function-button" onclick="dequeueHandler()">Dequeue</button>
+				<button class="function-button" onke onclick="dequeueHandler()">Dequeue</button>
 			</div>
+			<button class="reset-button" onclick="resetQueueHandler()">Reset</button>
 		</div>
 		<div class="functions-wrapper" id="bst-functions">
 			<div class="function-wrapper">
-				<input class="arg-input" id="insert-input" type="text" value=""/>
+				<input class="arg-input" id="insert-input" type="text" value="" onkeydown="insertHandler(event)"/>
 				<button class="function-button" onclick="insertHandler()">Insert</button>
 			</div>
 			<div class="function-wrapper">
-				<input class="arg-input" id="delete-input" type="text" value=""/>
+				<input class="arg-input" id="delete-input" type="text" value="" onkeydown="deleteHandler(event)"/>
 				<button class="function-button" onclick="deleteHandler()">Delete</button>
 			</div>
+			<button class="reset-button" onclick="resetBinarySearchTreeHandler()">Reset</button>
 		</div>
 	</body>
 	<script src="main.js"></script>

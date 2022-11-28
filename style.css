@@ -129,7 +129,7 @@ body
 	margin: 3%;
 	display: flex;
 	justify-content: center;
-	gap: 5%;
+	gap: 4%;
 }
 
 .arg-input
@@ -140,6 +140,11 @@ body
 }
 
 .function-button
+{
+	font-size: 22px;
+}
+
+.reset-button
 {
 	font-size: 22px;
 }

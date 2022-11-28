@@ -106,6 +106,13 @@ class LinkedList
 	{
 		return this.size;
 	}
+
+	empty()
+	{
+		this.head = null;
+		this.tail = null;
+		this.size = 0;
+	}
 }
 
 class Stack
@@ -128,6 +135,11 @@ class Stack
 	size()
 	{
 		return this.stack.length;
+	}
+
+	empty()
+	{
+		this.stack.length = 0;
 	}
 }
 
@@ -160,6 +172,13 @@ class Queue
 	size()
 	{
 		return (this.last - this.first);
+	}
+
+	empty()
+	{
+		this.queue.length = 0;
+		this.first = 0;
+		this.last = 0;
 	}
 }
 
@@ -307,6 +326,11 @@ class BinarySearchTree
 		}
 
 		return f(this.root);
+	}
+
+	empty()
+	{
+		this.root = null
 	}
 }
 
@@ -560,40 +584,49 @@ function isValidInput(val)
 	return ((val == parseInt(val)) && (parseInt(val) !== NaN) && (Math.abs(parseInt(val)) < 1001));
 }
 
-function addHandler()
+function addHandler(e)
 {
-	const val = add_input.value;
-	if(isValidInput(val))
+	if(!e || (e.key === "Enter"))
 	{
-		ctx.clearRect(0, 0, cvs.width, cvs.height);
-		llist.add(parseInt(val));
-		drawLinkedList();
+		const val = add_input.value;
+		if(isValidInput(val))
+		{
+			ctx.clearRect(0, 0, cvs.width, cvs.height);
+			llist.add(parseInt(val));
+			drawLinkedList();
+		}
+		add_input.value = "";
 	}
-	add_input.value = "";
 }
 
-function removeHandler()
+function removeHandler(e)
 {
-	const val = remove_input.value;
-	if(isValidInput(val))
+	if(!e || (e.key === "Enter"))
 	{
-		ctx.clearRect(0, 0, cvs.width, cvs.height);
-		llist.remove(parseInt(val));
-		drawLinkedList();
+		const val = remove_input.value;
+		if(isValidInput(val))
+		{
+			ctx.clearRect(0, 0, cvs.width, cvs.height);
+			llist.remove(parseInt(val));
+			drawLinkedList();
+		}
+		remove_input.value = "";
 	}
-	remove_input.value = "";
 }
 
-function pushHandler()
+function pushHandler(e)
 {
-	const val = push_input.value;
-	if(isValidInput(val))
+	if(!e || (e.key === "Enter"))
 	{
-		ctx.clearRect(0, 0, cvs.width, cvs.height);
-		stack.push(parseInt(val));
-		drawStack();
+		const val = push_input.value;
+		if(isValidInput(val))
+		{
+			ctx.clearRect(0, 0, cvs.width, cvs.height);
+			stack.push(parseInt(val));
+			drawStack();
+		}
+		push_input.value = "";
 	}
-	push_input.value = "";
 }
 
 function popHandler()
@@ -603,17 +636,19 @@ function popHandler()
 	drawStack();
 }
 
-function enqueueHandler()
+function enqueueHandler(e)
 {
-	
-	const val = enqueue_input.value;
-	if(isValidInput(val))
+	if(!e || (e.key === "Enter"))
 	{
-		ctx.clearRect(0, 0, cvs.width, cvs.height);
-		queue.enqueue(parseInt(val));
-		drawQueue();
+		const val = enqueue_input.value;
+		if(isValidInput(val))
+		{
+			ctx.clearRect(0, 0, cvs.width, cvs.height);
+			queue.enqueue(parseInt(val));
+			drawQueue();
+		}
+		enqueue_input.value = "";
 	}
-	enqueue_input.value = "";
 }
 
 function dequeueHandler()
@@ -623,28 +658,58 @@ function dequeueHandler()
 	drawQueue();
 }
 
-function insertHandler()
+function insertHandler(e)
 {
-	const val = insert_input.value;
-	if(isValidInput(val))
+	if(!e || (e.key === "Enter"))
 	{
-		ctx.clearRect(0, 0, cvs.width, cvs.height);
-		bst.insert(parseInt(val));
-		drawBinarySearchTree();
+		const val = insert_input.value;
+		if(isValidInput(val))
+		{
+			ctx.clearRect(0, 0, cvs.width, cvs.height);
+			bst.insert(parseInt(val));
+			drawBinarySearchTree();
+		}
+		insert_input.value = "";
 	}
-	insert_input.value = "";
 }
 
-function deleteHandler()
+function deleteHandler(e)
 {
-	const val = delete_input.value;
-	if(isValidInput(val))
+	if(!e || (e.key === "Enter"))
 	{
-		ctx.clearRect(0, 0, cvs.width, cvs.height);
-		bst.delete(parseInt(val));
-		drawBinarySearchTree();
+		const val = delete_input.value;
+		if(isValidInput(val))
+		{
+			ctx.clearRect(0, 0, cvs.width, cvs.height);
+			bst.delete(parseInt(val));
+			drawBinarySearchTree();
+		}
+		delete_input.value = "";
 	}
-	delete_input.value = "";
+}
+
+function resetLinkedListHandler()
+{
+	llist.empty();
+	draw("linkedlist");
+}
+
+function resetStackHandler()
+{
+	stack.empty();
+	draw("stack");
+}
+
+function resetQueueHandler()
+{
+	queue.empty();
+	draw("queue");
+}
+
+function resetBinarySearchTreeHandler()
+{
+	bst.empty();
+	draw("bst");
 }
 
 function openSourceCode()
@@ -653,9 +718,9 @@ function openSourceCode()
 }
 
 // on load
-alert(
-`Hi!
+// alert(
+// `Hi!
 
-Thanks for using my Interactive Data Structure Visualizer. I work on this when I have free time, so updates might be a little slow. I will add more features, data structures, and quality of life changes in the future.
+// Thanks for using my Interactive Data Structure Visualizer. I work on this when I have free time, so updates might be a little slow. I will add more features, data structures, and quality of life changes in the future.
 
-Numbers can be between -1000 and 1000 (inclusive).`);
+// Numbers can be between -1000 and 1000 (inclusive).`);
