@@ -101,7 +101,8 @@ body
 {
 	font-size: 24px;
 	background-color: #ddd;
-	width: 252px;
+	width: 202px;
+	height: 70px;
 	border: 1px solid black;
 	padding: 6px;
 	margin: -1px -1px 0;
@@ -112,7 +113,7 @@ body
 	background-color: #ccc;
 }
 
-#linkedlist-button
+#llist-button
 {
 	border-bottom: none;
 }
@@ -164,3 +165,7 @@ body
 	display: none;
 }
 
+#heap-functions
+{
+	display: none;
+}

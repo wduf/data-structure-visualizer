@@ -20,56 +20,67 @@
 		</div>
 		<div class="canvas-wrapper">
 			<div class="buttons-wrapper">
-				<button id="linkedlist-button" onclick="draw('linkedlist')">LinkedList</button>
+				<button id="llist-button" onclick="draw('llist')">LinkedList</button>
 				<button id="stack-button" onclick="draw('stack')">Stack</button>
 				<button id="queue-button" onclick="draw('queue')">Queue</button>
 				<button id="bst-button" onclick="draw('bst')">Binary Search Tree</button>
+				<button id="heap-button" onclick="draw('heap')">Max Heap</button>
 			</div>
 			<div class="canvas-border">
 				<canvas id="canvas" width="1000" height="500"></canvas>
 			</div>
 		</div>
-		<div class="functions-wrapper" id="linkedlist-functions">
+		<div class="functions-wrapper" id="llist-functions">
 			<div class="function-wrapper">
-				<input class="arg-input" id="add-input" type="text" value="" onkeydown="addHandler(event)"/>
-				<button class="function-button" onclick="addHandler()">Add</button>
+				<input class="arg-input" id="llist-add-input" type="text" value="" onkeydown="LListAddHandler(event)"/>
+				<button class="function-button" onclick="LListAddHandler()">Add</button>
 			</div>
 			<div class="function-wrapper">
-				<input class="arg-input" id="remove-input" type="text" value="" onkeydown="removeHandler(event)"/>
-				<button class="function-button" onclick="removeHandler()">Remove</button>
+				<input class="arg-input" id="llist-remove-input" type="text" value="" onkeydown="LListRemoveHandler(event)"/>
+				<button class="function-button" onclick="LListRemoveHandler()">Remove</button>
 			</div>
-			<button class="reset-button" onclick="resetLinkedListHandler()">Reset</button>
+			<button class="reset-button" onclick="resetHandler('llist')">Reset</button>
 		</div>
 		<div class="functions-wrapper" id="stack-functions">
 			<div class="function-wrapper">
-				<input class="arg-input" id="push-input" type="text" value="" onkeydown="pushHandler(event)"/>
-				<button class="function-button" onclick="pushHandler()">Push</button>
+				<input class="arg-input" id="stack-push-input" type="text" value="" onkeydown="stackPushHandler(event)"/>
+				<button class="function-button" onclick="stackPushHandler()">Push</button>
 			</div>
 			<div class="function-wrapper">
-				<button class="function-button" onclick="popHandler()">Pop</button>
+				<button class="function-button" onclick="stackPopHandler()">Pop</button>
 			</div>
-			<button class="reset-button" onclick="resetStackHandler()">Reset</button>
+			<button class="reset-button" onclick="resetHandler('stack')">Reset</button>
 		</div>
 		<div class="functions-wrapper" id="queue-functions">
 			<div class="function-wrapper">
-				<input class="arg-input" id="enqueue-input" type="text" value="" onkeydown="enqueueHandler(event)"/>
-				<button class="function-button" onclick="enqueueHandler()">Enqueue</button>
+				<input class="arg-input" id="queue-enqueue-input" type="text" value="" onkeydown="queueEnqueueHandler(event)"/>
+				<button class="function-button" onclick="queueEnqueueHandler()">Enqueue</button>
 			</div>
 			<div class="function-wrapper">
-				<button class="function-button" onke onclick="dequeueHandler()">Dequeue</button>
+				<button class="function-button" onke onclick="queueDequeueHandler()">Dequeue</button>
 			</div>
-			<button class="reset-button" onclick="resetQueueHandler()">Reset</button>
+			<button class="reset-button" onclick="resetHandler('queue')">Reset</button>
 		</div>
 		<div class="functions-wrapper" id="bst-functions">
 			<div class="function-wrapper">
-				<input class="arg-input" id="insert-input" type="text" value="" onkeydown="insertHandler(event)"/>
-				<button class="function-button" onclick="insertHandler()">Insert</button>
+				<input class="arg-input" id="bst-insert-input" type="text" value="" onkeydown="BSTInsertHandler(event)"/>
+				<button class="function-button" onclick="BSTInsertHandler()">Insert</button>
 			</div>
 			<div class="function-wrapper">
-				<input class="arg-input" id="delete-input" type="text" value="" onkeydown="deleteHandler(event)"/>
-				<button class="function-button" onclick="deleteHandler()">Delete</button>
+				<input class="arg-input" id="bst-delete-input" type="text" value="" onkeydown="BSTDeleteHandler(event)"/>
+				<button class="function-button" onclick="BSTDeleteHandler()">Delete</button>
 			</div>
-			<button class="reset-button" onclick="resetBinarySearchTreeHandler()">Reset</button>
+			<button class="reset-button" onclick="resetHandler('bst')">Reset</button>
+		</div>
+		<div class="functions-wrapper" id="heap-functions">
+			<div class="function-wrapper">
+				<input class="arg-input" id="heap-insert-input" type="text" value="" onkeydown="heapInsertHandler(event)"/>
+				<button class="function-button" onclick="heapInsertHandler()">Insert</button>
+			</div>
+			<div class="function-wrapper">
+				<button class="function-button" onclick="heapDeleteHandler()">Delete</button>
+			</div>
+			<button class="reset-button" onclick="resetHandler('heap')">Reset</button>
 		</div>
 	</body>
 	<script src="main.js"></script>
