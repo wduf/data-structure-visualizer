@@ -1,10 +1,12 @@
-# data-structure-visualizer
+# Interactive Data Structure Visualizer
 
-A tool to visualize what common data structures look like. It includes a list of functions for each data structure and a corresponding visual that shows the current state of each data structure, scaled with the number of elements.
+[Website](https://willdufault.github.io/interactive-data-structure-visualizer)
 
-Includes:
+A tool to help learn about and visualize common data structures.
+
+Currently includes:
 - Linked List
 - Stack
 - Queue
 - Binary Search Tree
-- Max Heap (Max Priority Queue)
+- Max Heap (aka Max Priority Queue)
